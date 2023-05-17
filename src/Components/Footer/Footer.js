@@ -11,7 +11,7 @@ const Footer = () => {
     });
   };
   return (
-    <footer className="flex flex-col font-['Quicksand']">
+    <footer className="flex flex-col mt-5 font-['Quicksand']">
       <div className="flex justify-between items-center bg-slate-200 h-60">
         <div className="flex flex-col  gap-10 w-96 items-center p-2">
           <div className="font-['Bruno_Ace_SC'] text-2xl">Hesam Shopping</div>
