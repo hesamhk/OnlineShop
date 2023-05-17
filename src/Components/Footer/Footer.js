@@ -11,8 +11,8 @@ const Footer = () => {
     });
   };
   return (
-    <footer className="flex flex-col gap-8 font-['Quicksand']">
-      <div className="flex justify-between items-center bg-slate-200 my-2 h-60">
+    <footer className="flex flex-col font-['Quicksand']">
+      <div className="flex justify-between items-center bg-slate-200 h-60">
         <div className="flex flex-col  gap-10 w-96 items-center p-2">
           <div className="font-['Bruno_Ace_SC'] text-2xl">Hesam Shopping</div>
           <div className="text-center">
