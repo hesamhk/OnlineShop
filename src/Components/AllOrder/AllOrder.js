@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function AllOrder() {
   const { order, loading, error } = useSelector((state) => state.allorder);
   const { userInfo } = useSelector((state) => state.login);
-  // const orderItemsList = order?.map(({ orderItems }) => orderItems);
+  
   const isLogin = userInfo?.user?.token;
 
   const dispatch = useDispatch();
