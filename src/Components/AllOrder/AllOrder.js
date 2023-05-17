@@ -4,6 +4,8 @@ import { getAllOrder } from "../../Redux/action";
 import Loading from "./Pulse-1s-200px.svg";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import cartEmpty from "./empty-cart.svg";
+
 
 function AllOrder() {
   const { order, loading, error } = useSelector((state) => state.allorder);
@@ -23,7 +25,18 @@ function AllOrder() {
 
   return (
     <>
-      {loading ? (
+      {order === undefined ? (
+        <div className="flex flex-col gap-3 container mx-auto w-[100%] text-center bg-slate-300 p-10 rounded-xl font-['futura'] text-2xl my-20">
+          <img
+            alt="cart empty"
+            src={cartEmpty}
+            width={200}
+            height={200}
+            className="mx-auto"
+          />
+          <div>Your order is Empty!</div>
+        </div>
+      ) : loading ? (
         <div className="flex justify-center items-center h-[100vh]">
           <img alt="Loading" src={Loading} width={100} height={100} />
         </div>
