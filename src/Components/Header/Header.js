@@ -8,17 +8,31 @@ import { SlLogout } from "react-icons/sl";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
-import { userLogout } from "../../Redux/action";
+import { getProfile, userLogout } from "../../Redux/action";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.login);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
+  const [isProfileFetched, setProfileFetched] = useState(false);
+
   useEffect(() => {
+    if (!isProfileFetched) {
+      dispatch(getProfile());
+      setProfileFetched(true);
+    }
+
+    const token = user?.user?.token;
+    const tokenExpired = token && new Date().getTime() >= token.expiresIn;
+    if (tokenExpired) {
+      dispatch(userLogout());
+    }
+
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpen(false);
@@ -30,7 +44,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [menuRef, cartItems]);
+  }, [menuRef, cartItems, user, dispatch]);
 
   return (
     <div className="flex justify-between items-center  p-3 shadow-md rounded-lg relative">
