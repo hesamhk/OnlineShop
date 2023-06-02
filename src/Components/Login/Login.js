@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../Redux/action";
 import { FaExclamation } from "react-icons/fa";
+import { BsEyeFill } from "react-icons/bs";
+import { BsEyeSlashFill } from "react-icons/bs";
 import Loading from "./Pulse-1s-200px.svg";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,6 +19,7 @@ function Login() {
 
   const isLogin = userInfo?.user;
   const [showForm, setShowForm] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isLogin) {
@@ -100,11 +103,21 @@ function Login() {
                 <div className="flex justify-between items-center border-2 border-black rounded-full p-2 w-96">
                   <input
                     placeholder="Password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     className="outline-none py-2 px-2 font-['kodchasan'] w-full"
                     {...formik.getFieldProps("password")}
                   />
-                  <TfiKey className="w-8 h-6 mr-2 text-slate-400 rotate-[135deg]" />
+                  {showPassword ? (
+                    <BsEyeFill
+                      className="w-8 h-6 mr-2 text-slate-400"
+                      onClick={() => setShowPassword(false)}
+                    />
+                  ) : (
+                    <BsEyeSlashFill
+                      className="w-8 h-6 mr-2 text-slate-400"
+                      onClick={() => setShowPassword(true)}
+                    />
+                  )}
                 </div>
                 {formik.touched.password && formik.errors.password ? (
                   <div className="flex items-center gap-2 text-yellow-500 bg-yellow-100 p-2 rounded-xl">
