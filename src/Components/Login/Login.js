@@ -145,65 +145,6 @@ function Login() {
           )}
         </>
       )}
-      {/* {error && !loading && (
-        <div className="flex flex-col items-center mt-40">
-          <div className=" mt-auto text-5xl font-bold font-['kodchasan'] ">
-            Login
-          </div>
-          <form
-            className="flex flex-col gap-6 mx-auto mt-16  "
-            onSubmit={(e) => {
-              e.preventDefault();
-              formik.handleSubmit(e);
-            }}
-          >
-            <div className="flex justify-between items-center border-2 border-black rounded-full p-2 w-96">
-              <input
-                placeholder="Email"
-                className="outline-none py-2 px-2 font-['kodchasan'] w-full"
-                {...formik.getFieldProps("email")}
-              />
-              <RxPerson className="w-8 h-6 mr-4 text-slate-400" />
-            </div>
-            {formik.touched.email && formik.errors.email ? (
-              <div className="flex items-center gap-2 text-yellow-500 bg-yellow-100 p-2 rounded-xl">
-                <FaExclamation />
-                <div>{formik.errors.email}</div>
-              </div>
-            ) : null}
-            <div className="flex justify-between items-center border-2 border-black rounded-full p-2 w-96">
-              <input
-                placeholder="Password"
-                type="password"
-                className="outline-none py-2 px-2 font-['kodchasan'] w-full"
-                {...formik.getFieldProps("password")}
-              />
-              <TfiKey className="w-8 h-6 mr-2 text-slate-400 rotate-[135deg]" />
-            </div>
-            {formik.touched.password && formik.errors.password ? (
-              <div className="flex items-center gap-2 text-yellow-500 bg-yellow-100 p-2 rounded-xl">
-                <FaExclamation />
-                <div>{formik.errors.password}</div>
-              </div>
-            ) : null}
-            <button
-              type="submit"
-              className="bg-black text-white py-2 rounded-full text-2xl w-1/2 mx-auto hover:bg-gray-700"
-            >
-              Login
-            </button>
-          </form>
-          <div className="flex justify-start items-center mt-4 font-['kodchasan'] h-10">
-            Do you have an Account ?
-            <div
-              className="cursor-pointer hover:border-b-[1px] border-cyan-500 hover:text-sky-500 hove ml-2"
-              onClick={() => navigate("/signup")}
-            >
-              Sign Up
-            </div>
-          </div>
-        </div>
-      )} */}
     </>
   );
 }
