@@ -125,29 +125,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
-{
-  /* <div className="ml-[290px] flex border-2 border-black rounded-full items-center">
-                <AiOutlineMinusCircle
-                  className={
-                    qty === 1
-                      ? "pointer-events-none text-2xl m-1 cursor-pointer opacity-25"
-                      : "text-2xl m-1 cursor-pointer"
-                  }
-                  onClick={() => setQty((last) => last - 1)}
-                />
-                <input
-                  className="w-6 text-center outline-none"
-                  placeholder="1"
-                  value={qty}
-                />
-                <AiFillPlusCircle
-                  className={
-                    product.countInStock <= qty
-                      ? "pointer-events-none text-2xl m-1 cursor-pointer opacity-25"
-                      : "text-2xl m-1 cursor-pointer"
-                  }
-                  onClick={() => setQty((last) => last + 1)}
-                />
-              </div> */
-}
