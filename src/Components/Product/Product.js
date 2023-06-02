@@ -33,7 +33,7 @@ function Product({ product }) {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-72 shadow-xl rounded-md h-[33rem]">
+    <div className="flex flex-col gap-6 w-72 shadow-xl rounded-md h-[33rem] mt-5 hover:mt-1 transition-all duration-200">
       <ToastContainer />
       <div className="text-red-500 text-xl font-semibold p-4 font-['Grand_Hotel']">
         Special Sale
