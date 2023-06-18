@@ -4,24 +4,37 @@ import { useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { SlSettings } from "react-icons/sl";
+import { BsSearch } from "react-icons/bs";
 import { SlLogout } from "react-icons/sl";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
-import { getProfile, userLogout } from "../../Redux/action";
+import { getProducts, getProfile, userLogout } from "../../Redux/action";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.login);
   const { user } = useSelector((state) => state.user);
+  const { products, loading, error } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const searchRef = useRef(null);
 
+  const [open, setOpen] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [result, setResult] = useState([]);
   const [isProfileFetched, setProfileFetched] = useState(false);
 
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchValue(e.target.value);
+  };
+
   useEffect(() => {
+    dispatch(getProducts());
+
     if (!isProfileFetched) {
       dispatch(getProfile());
       setProfileFetched(true);
@@ -44,15 +57,78 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [menuRef, cartItems, user, dispatch]);
+  }, [dispatch, isProfileFetched]);
+
+  useEffect(() => {
+    if (searchValue.length > 0) {
+      setOpenSearch(true);
+    }
+
+    if (searchValue.length > 0) {
+      const filteredProducts = products.filter((product) => {
+        return product.name.toLowerCase().includes(searchValue);
+      });
+      setResult(filteredProducts);
+    } else {
+      setResult([]);
+    }
+
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setOpenSearch(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [products, searchValue]);
 
   return (
-    <div className="flex justify-between items-center  p-3 shadow-md rounded-lg relative">
+    <div className="flex justify-between items-center  p-3 shadow-md rounded-lg sticky top-0 bg-white w-full">
       <div
         className=" text-2xl cursor-pointer font-['Bruno_Ace_SC']"
         onClick={() => navigate("/")}
       >
         Hesam Shopping
+      </div>
+      <div className="flex flex-col">
+        <div className="flex items-center border-black border-2 p-2 rounded-lg ">
+          <BsSearch />
+          <input
+            type="text"
+            placeholder="Search Product ..."
+            className="rounded-lg pl-5 w-96 outline-none "
+            value={searchValue}
+            onChange={handleChange}
+          />
+        </div>
+        {openSearch ? (
+          <ul
+            ref={searchRef}
+            className="absolute top-[65px] bg-slate-50 rounded-b-lg  max-h-80 w-[420px] overflow-scroll"
+          >
+            {result.map((item) => {
+              return (
+                <li
+                  onClick={() => {
+                    navigate(`productDetails/${item._id}`);
+                    setOpenSearch(false);
+                    setSearchValue("");
+                  }}
+                  className="flex justify-start items-center px-3 py-4 border-b-[1px] border-slate-300 cursor-pointer hover:bg-slate-200 transition-all duration-200"
+                >
+                  <img alt="alt" src={item.image} className="w-1/4 h-20" />
+                  <div className="truncate pl-6" title={item.name}>
+                    {item.name}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
       </div>
       <div className="flex justify-evenly items-center">
         <div className="relative">
@@ -89,7 +165,7 @@ const Header = () => {
                   >
                     <div
                       className="flex items-center gap-3 w-full hover:bg-slate-200 p-1 rounded-xl cursor-pointer transition-all duration-200 "
-                      onClick={(e) => {
+                      onClick={() => {
                         navigate("profile");
                         setOpen(false);
                       }}

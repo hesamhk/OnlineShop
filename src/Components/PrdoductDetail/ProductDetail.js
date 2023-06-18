@@ -69,7 +69,7 @@ const ProductDetail = () => {
             <img
               alt="product"
               src={product.image}
-              className=" rounded-xl h-[60%]"
+              className="rounded-xl h-[60%] w-5/6"
             />
           </div>
           <div className="flex flex-col gap-3 w-[50%]">
